@@ -1,35 +1,25 @@
+import numpy as np
 import spotipy
+from sklearn.ensemble import RandomForestRegressor
 from spotipy.oauth2 import SpotifyOAuth
 import pandas as pd
-from feature_importance import dataset_preparation
+import model_training
+from model_training import build_model, hyperparameter_tuning, tune_model, evaluate_model, \
+    LinearRegression, LassoRegression, RidgeRegression
+from acquiring_data import preprocessing_data
 
 if __name__ == "__main__":
     def main():
-        scope = ("playlist-read-private", "user-library-read", "user-top-read")
-        sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope))
+        X_test = pd.read_pickle('Data/Train Test Data/X_test.pickle')
+        X_train = pd.read_pickle('Data/Train Test Data/X_train.pickle')
+        y_test = pd.read_pickle('Data/Train Test Data/y_test.pickle')
+        y_train = pd.read_pickle('Data/Train Test Data/y_train.pickle')
+        model_performance = pd.DataFrame(columns=['Name', 'RMSE', 'MAE'])
+        # model_performance.loc[len(model_performance)] = linear_regression
 
-        # user_tracks_df = spotify_user_access.get_tracks(sp)
-        # user_tracks_df.to_pickle('user_tracks_df.pkl')
-        user_tracks_df = pd.read_pickle('user_tracks_df.pkl')
+        # linear_regression = LinearRegression.linear_regression_model(X_train, X_test, y_train, y_test)
+        # lasso_regression = LassoRegression.lasso_regression_model(X_train, X_test, y_train, y_test)
+        # ridge_regression = RidgeRegression.ridge_regression_model(X_train, X_test, y_train, y_test)
 
-        # track_artists = spotify_user_access.get_artist(sp, user_tracks_df)
-        # track_artists.to_pickle('track_artists.pkl')
-        track_artists = pd.read_pickle('track_artists.pkl')
-
-        # tracks_audio_features = spotify_user_access.get_audio_features(sp, user_tracks_df)
-        # tracks_audio_features.to_pickle('audio_features.pkl')
-        tracks_audio_features = pd.read_pickle('audio_features.pkl')
-
-        # user_stats_df = user_tracks_df.merge(tracks_audio_features, how='left', on='track_id')
-        # user_stats_df = user_stats_df.merge(track_artists.drop_duplicates(subset=['artist_id', 'artist_name']),
-        #                                     on=['artist_id', 'artist_name'])
-        # user_stats_df = user_stats_df[user_stats_df['genres'].map(lambda d: len(d)) > 0]  # Remove empty rows with
-        # # empty genre
-        # user_stats_df.to_pickle('user_stats_df.pkl')
-
-        user_stats_df = pd.read_pickle('user_stats_df.pkl')
-
-        # feature_corr.calculate_corr(tracks_audio_features.drop(['track_id'], axis=1))
-        dataset_preparation.scale_dataframe(tracks_audio_features.drop(['track_id', 'mode', 'time_signature'], axis=1))
 
     main()

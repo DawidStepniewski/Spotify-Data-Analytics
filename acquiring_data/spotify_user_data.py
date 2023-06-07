@@ -68,6 +68,7 @@ def get_audio_features(sp, user_tracks_df: pd.DataFrame()) -> pd.DataFrame():
     duration_ms = []
     mode = []
     time_signature = []
+    key = []
 
     for track in user_tracks_df['track_id']:
         try:
@@ -83,6 +84,7 @@ def get_audio_features(sp, user_tracks_df: pd.DataFrame()) -> pd.DataFrame():
             duration_ms.append(sp.audio_features(track)[0].get('duration_ms'))
             mode.append(sp.audio_features(track)[0].get('mode'))
             time_signature.append(sp.audio_features(track)[0].get('time_signature'))
+            key.append(sp.audio_features(track)[0].get('key'))
 
         except Exception as e:
             print(e)
@@ -101,5 +103,6 @@ def get_audio_features(sp, user_tracks_df: pd.DataFrame()) -> pd.DataFrame():
     df['duration_ms'] = duration_ms
     df['mode'] = mode
     df['time_signature'] = time_signature
+    df['key'] = key
 
     return df
