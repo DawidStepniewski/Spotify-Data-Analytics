@@ -15,11 +15,14 @@ if __name__ == "__main__":
         y_test = pd.read_pickle('Data/Train Test Data/y_test.pickle')
         y_train = pd.read_pickle('Data/Train Test Data/y_train.pickle')
         model_performance = pd.DataFrame(columns=['Name', 'RMSE', 'MAE'])
-        # model_performance.loc[len(model_performance)] = linear_regression
 
-        # linear_regression = LinearRegression.linear_regression_model(X_train, X_test, y_train, y_test)
-        # lasso_regression = LassoRegression.lasso_regression_model(X_train, X_test, y_train, y_test)
-        # ridge_regression = RidgeRegression.ridge_regression_model(X_train, X_test, y_train, y_test)
+        linear_regression = LinearRegression.linear_regression_model(X_train, X_test, y_train, y_test)
+        lasso_regression = LassoRegression.lasso_regression_model(X_train, X_test, y_train, y_test)
+        ridge_regression = RidgeRegression.ridge_regression_model(X_train, X_test, y_train, y_test)
 
+        model_performance.loc[len(model_performance)] = linear_regression
+        model_performance.loc[len(model_performance)] = lasso_regression
+        model_performance.loc[len(model_performance)] = ridge_regression
+        print(model_performance)
 
     main()
